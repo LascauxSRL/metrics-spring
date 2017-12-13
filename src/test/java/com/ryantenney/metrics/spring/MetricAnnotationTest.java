@@ -56,31 +56,31 @@ public class MetricAnnotationTest {
 
 		assertNotNull(target.theNameForTheMeter);
 		assertNotNull(target2.theNameForTheMeter);
-		Meter meter = (Meter) forMetricField(metricRegistry, MetricAnnotationTest.Target.class, "theNameForTheMeter");
+		Meter meter = (Meter) forMetricField(target, metricRegistry, MetricAnnotationTest.Target.class, "theNameForTheMeter");
 		assertSame(target.theNameForTheMeter, meter);
 		assertSame(target2.theNameForTheMeter, meter);
 
 		assertNotNull(target.timer);
 		assertNotNull(target2.timer);
-		Timer timer = (Timer) forMetricField(metricRegistry, MetricAnnotationTest.Target.class, "timer");
+		Timer timer = (Timer) forMetricField(target, metricRegistry, MetricAnnotationTest.Target.class, "timer");
 		assertSame(target.timer, timer);
 		assertSame(target2.timer, timer);
 
 		assertNotNull(target.counter);
 		assertNotNull(target2.counter);
-		Counter ctr = (Counter) forMetricField(metricRegistry, MetricAnnotationTest.Target.class, "counter");
+		Counter ctr = (Counter) forMetricField(target, metricRegistry, MetricAnnotationTest.Target.class, "counter");
 		assertSame(target.counter, ctr);
 		assertSame(target2.counter, ctr);
 
 		assertNotNull(target.histogram);
 		assertNotNull(target2.histogram);
-		Histogram hist = (Histogram) forMetricField(metricRegistry, MetricAnnotationTest.Target.class, "histogram");
+		Histogram hist = (Histogram) forMetricField(target, metricRegistry, MetricAnnotationTest.Target.class, "histogram");
 		assertSame(target.histogram, hist);
 		assertSame(target2.histogram, hist);
 
 		assertNotNull(target.uniformHistogram);
 		assertNotNull(target2.uniformHistogram);
-		Histogram uniHist = (Histogram) forMetricField(metricRegistry, MetricAnnotationTest.Target.class, "uniformHistogram");
+		Histogram uniHist = (Histogram) forMetricField(target, metricRegistry, MetricAnnotationTest.Target.class, "uniformHistogram");
 		assertSame(target.uniformHistogram, uniHist);
 		assertSame(target2.uniformHistogram, uniHist);
 	}

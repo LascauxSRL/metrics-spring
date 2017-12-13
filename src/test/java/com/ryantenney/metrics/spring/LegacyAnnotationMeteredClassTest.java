@@ -50,7 +50,7 @@ public class LegacyAnnotationMeteredClassTest {
 
 	@Test
 	public void gauges() {
-		CachedGauge<?> cachedGaugedMethod = forLegacyCachedGaugeMethod(metricRegistry, LegacyMeteredClass.class, "cachedGaugedMethod");
+		CachedGauge<?> cachedGaugedMethod = forLegacyCachedGaugeMethod(meteredClass, metricRegistry, LegacyMeteredClass.class, "cachedGaugedMethod");
 
 		assertEquals(999, cachedGaugedMethod.getValue());
 

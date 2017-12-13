@@ -49,12 +49,12 @@ class TestUtil {
 		return Util.forMeteredMethod(klass, member, annotation);
 	}
 
-	static String forGauge(Class<?> klass, Member member, com.codahale.metrics.annotation.Gauge annotation) {
-		return Util.forGauge(klass, member, annotation);
+	static String forGauge(Object bean, Class<?> klass, Member member, com.codahale.metrics.annotation.Gauge annotation) {
+		return Util.forGauge(bean, klass, member, annotation);
 	}
 
-	static String forCachedGauge(Class<?> klass, Member member, com.codahale.metrics.annotation.CachedGauge annotation) {
-		return Util.forCachedGauge(klass, member, annotation);
+	static String forCachedGauge(Object bean, Class<?> klass, Member member, com.codahale.metrics.annotation.CachedGauge annotation) {
+		return Util.forCachedGauge(bean, klass, member, annotation);
 	}
 
 	static String forExceptionMeteredMethod(Class<?> klass, Member member, ExceptionMetered annotation) {
@@ -65,12 +65,12 @@ class TestUtil {
 		return Util.forCountedMethod(klass, member, annotation);
 	}
 
-	static String forMetricField(Class<?> klass, Member member, Metric annotation) {
+	static String forMetricField(Object bean, Class<?> klass, Member member, Metric annotation) {
 		return Util.forMetricField(klass, member, annotation);
 	}
 
 	@Deprecated
-	static String forLegacyCachedGauge(Class<?> klass, Member member, com.ryantenney.metrics.annotation.CachedGauge annotation) {
+	static String forLegacyCachedGauge(Object bean, Class<?> klass, Member member, com.ryantenney.metrics.annotation.CachedGauge annotation) {
 		return Util.forCachedGauge(klass, member, annotation);
 	}
 
@@ -80,27 +80,27 @@ class TestUtil {
 	}
 
 	@Deprecated
-	static String forLegacyMetricField(Class<?> klass, Member member, com.ryantenney.metrics.annotation.Metric annotation) {
+	static String forLegacyMetricField(Object bean, Class<?> klass, Member member, com.ryantenney.metrics.annotation.Metric annotation) {
 		return Util.forMetricField(klass, member, annotation);
 	}
 
-	static Gauge<?> forGaugeField(MetricRegistry metricRegistry, Class<?> clazz, String fieldName) {
+	static Gauge<?> forGaugeField(Object bean, MetricRegistry metricRegistry, Class<?> clazz, String fieldName) {
 		Field field = findField(clazz, fieldName);
-		String metricName = forGauge(clazz, field, field.getAnnotation(com.codahale.metrics.annotation.Gauge.class));
+		String metricName = forGauge(bean, clazz, field, field.getAnnotation(com.codahale.metrics.annotation.Gauge.class));
 		log.info("Looking up gauge field named '{}'", metricName);
 		return metricRegistry.getGauges().get(metricName);
 	}
 
-	static Gauge<?> forGaugeMethod(MetricRegistry metricRegistry, Class<?> clazz, String methodName) {
+	static Gauge<?> forGaugeMethod(Object bean, MetricRegistry metricRegistry, Class<?> clazz, String methodName) {
 		Method method = findMethod(clazz, methodName);
-		String metricName = forGauge(clazz, method, method.getAnnotation(com.codahale.metrics.annotation.Gauge.class));
+		String metricName = forGauge(bean, clazz, method, method.getAnnotation(com.codahale.metrics.annotation.Gauge.class));
 		log.info("Looking up gauge method named '{}'", metricName);
 		return metricRegistry.getGauges().get(metricName);
 	}
 
-	static CachedGauge<?> forCachedGaugeMethod(MetricRegistry metricRegistry, Class<?> clazz, String methodName) {
+	static CachedGauge<?> forCachedGaugeMethod(Object bean, MetricRegistry metricRegistry, Class<?> clazz, String methodName) {
 		Method method = findMethod(clazz, methodName);
-		String metricName = forCachedGauge(clazz, method, method.getAnnotation(com.codahale.metrics.annotation.CachedGauge.class));
+		String metricName = forCachedGauge(bean, clazz, method, method.getAnnotation(com.codahale.metrics.annotation.CachedGauge.class));
 		log.info("Looking up cached gauge method named '{}'", metricName);
 		return (CachedGauge<?>) metricRegistry.getGauges().get(metricName);
 	}
@@ -133,16 +133,16 @@ class TestUtil {
 		return metricRegistry.getCounters().get(metricName);
 	}
 
-	static com.codahale.metrics.Metric forMetricField(MetricRegistry metricRegistry, Class<?> clazz, String fieldName) {
+	static com.codahale.metrics.Metric forMetricField(Object bean, MetricRegistry metricRegistry, Class<?> clazz, String fieldName) {
 		Field field = findField(clazz, fieldName);
-		String metricName = forMetricField(clazz, field, field.getAnnotation(Metric.class));
+		String metricName = forMetricField(bean, clazz, field, field.getAnnotation(Metric.class));
 		return getMetric(metricRegistry, field.getType(), metricName);
 	}
 
 	@Deprecated
-	static CachedGauge<?> forLegacyCachedGaugeMethod(MetricRegistry metricRegistry, Class<?> clazz, String methodName) {
+	static CachedGauge<?> forLegacyCachedGaugeMethod(Object bean, MetricRegistry metricRegistry, Class<?> clazz, String methodName) {
 		Method method = findMethod(clazz, methodName);
-		String metricName = forLegacyCachedGauge(clazz, method, method.getAnnotation(com.ryantenney.metrics.annotation.CachedGauge.class));
+		String metricName = forLegacyCachedGauge(bean, clazz, method, method.getAnnotation(com.ryantenney.metrics.annotation.CachedGauge.class));
 		log.info("Looking up cached gauge method named '{}'", metricName);
 		return (CachedGauge<?>) metricRegistry.getGauges().get(metricName);
 	}
@@ -156,9 +156,9 @@ class TestUtil {
 	}
 
 	@Deprecated
-	static com.codahale.metrics.Metric forLegacyMetricField(MetricRegistry metricRegistry, Class<?> clazz, String fieldName) {
+	static com.codahale.metrics.Metric forLegacyMetricField(Object bean, MetricRegistry metricRegistry, Class<?> clazz, String fieldName) {
 		Field field = findField(clazz, fieldName);
-		String metricName = forLegacyMetricField(clazz, field, field.getAnnotation(com.ryantenney.metrics.annotation.Metric.class));
+		String metricName = forLegacyMetricField(bean, clazz, field, field.getAnnotation(com.ryantenney.metrics.annotation.Metric.class));
 		return getMetric(metricRegistry, field.getType(), metricName);
 	}
 

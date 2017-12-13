@@ -43,7 +43,7 @@ class GaugeMethodAnnotationBeanPostProcessor extends AbstractAnnotationBeanPostP
 		}
 
 		final Gauge annotation = method.getAnnotation(Gauge.class);
-		final String metricName = Util.forGauge(targetClass, method, annotation);
+		final String metricName = Util.forGauge(bean, targetClass, method, annotation);
 
 		metrics.register(metricName, new com.codahale.metrics.Gauge<Object>() {
 			@Override

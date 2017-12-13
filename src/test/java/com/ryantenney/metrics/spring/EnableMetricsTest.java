@@ -105,7 +105,7 @@ public class EnableMetricsTest {
 	@Test
 	public void gaugeField() throws Throwable {
 		// Verify that the Gauge field's value is returned
-		Gauge<Integer> fieldGauge = (Gauge<Integer>) forGaugeField(metricRegistry, TestBean.class, "intGaugeField");
+		Gauge<Integer> fieldGauge = (Gauge<Integer>) forGaugeField(testBean, metricRegistry, TestBean.class, "intGaugeField");
 		assertNotNull(fieldGauge);
 		assertThat(fieldGauge.getValue(), is(5));
 	}
@@ -113,7 +113,7 @@ public class EnableMetricsTest {
 	@Test
 	public void gaugeMethod() throws Throwable {
 		// Verify that the Gauge method's value is returned
-		Gauge<Integer> methodGauge = (Gauge<Integer>) forGaugeMethod(metricRegistry, TestBean.class, "intGaugeMethod");
+		Gauge<Integer> methodGauge = (Gauge<Integer>) forGaugeMethod(testBean, metricRegistry, TestBean.class, "intGaugeMethod");
 		assertNotNull(methodGauge);
 		assertThat(methodGauge.getValue(), is(6));
 	}
@@ -121,7 +121,7 @@ public class EnableMetricsTest {
 	@Test
 	public void cachedGaugeMethod() throws Throwable {
 		// Verify that the Gauge method's value is returned
-		CachedGauge<Integer> methodCachedGauge = (CachedGauge<Integer>) forCachedGaugeMethod(metricRegistry, TestBean.class, "cachedGaugeMethod");
+		CachedGauge<Integer> methodCachedGauge = (CachedGauge<Integer>) forCachedGaugeMethod(testBean, metricRegistry, TestBean.class, "cachedGaugeMethod");
 		assertNotNull(methodCachedGauge);
 		assertThat(methodCachedGauge.getValue(), is(7));
 	}

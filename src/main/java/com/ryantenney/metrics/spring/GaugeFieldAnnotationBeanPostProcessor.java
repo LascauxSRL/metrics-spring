@@ -41,7 +41,7 @@ class GaugeFieldAnnotationBeanPostProcessor extends AbstractAnnotationBeanPostPr
 		ReflectionUtils.makeAccessible(field);
 
 		final Gauge annotation = field.getAnnotation(Gauge.class);
-		final String metricName = Util.forGauge(targetClass, field, annotation);
+		final String metricName = Util.forGauge(bean, targetClass, field, annotation);
 
 		metrics.register(metricName, new com.codahale.metrics.Gauge<Object>() {
 			@Override

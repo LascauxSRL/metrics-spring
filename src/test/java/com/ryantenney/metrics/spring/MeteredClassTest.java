@@ -64,10 +64,10 @@ public class MeteredClassTest {
 
 	@Test
 	public void gauges() {
-		Gauge<?> gaugedField = forGaugeField(metricRegistry, MeteredClass.class, "gaugedField");
-		Gauge<?> gaugedMethod = forGaugeMethod(metricRegistry, MeteredClass.class, "gaugedMethod");
-		Gauge<?> gaugedGaugeField = forGaugeField(metricRegistry, MeteredClass.class, "gaugedGaugeField");
-		CachedGauge<?> cachedGaugedMethod = forCachedGaugeMethod(metricRegistry, MeteredClass.class, "cachedGaugedMethod");
+		Gauge<?> gaugedField = forGaugeField(meteredClass, metricRegistry, MeteredClass.class, "gaugedField");
+		Gauge<?> gaugedMethod = forGaugeMethod(meteredClass, metricRegistry, MeteredClass.class, "gaugedMethod");
+		Gauge<?> gaugedGaugeField = forGaugeField(meteredClass, metricRegistry, MeteredClass.class, "gaugedGaugeField");
+		CachedGauge<?> cachedGaugedMethod = forCachedGaugeMethod(meteredClass, metricRegistry, MeteredClass.class, "cachedGaugedMethod");
 
 		assertEquals(999, gaugedField.getValue());
 		assertEquals(999, gaugedMethod.getValue());

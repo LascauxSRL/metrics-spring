@@ -43,7 +43,7 @@ class CachedGaugeAnnotationBeanPostProcessor extends AbstractAnnotationBeanPostP
 		}
 
 		final CachedGauge annotation = method.getAnnotation(CachedGauge.class);
-		final String metricName = Util.forCachedGauge(targetClass, method, annotation);
+		final String metricName = Util.forCachedGauge(bean, targetClass, method, annotation);
 
 		metrics.register(metricName, new com.codahale.metrics.CachedGauge<Object>(annotation.timeout(), annotation.timeoutUnit()) {
 			@Override

@@ -32,56 +32,62 @@ class Util {
 	private Util() {}
 
 	static String forTimedMethod(Class<?> klass, Member member, Timed annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member);
+		return chooseName(null, annotation.name(), annotation.absolute(), klass, member);
 	}
 
 	static String forMeteredMethod(Class<?> klass, Member member, Metered annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member);
+		return chooseName(null, annotation.name(), annotation.absolute(), klass, member);
 	}
 
-	static String forGauge(Class<?> klass, Member member, Gauge annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member);
+	static String forGauge(Object bean, Class<?> klass, Member member, Gauge annotation) {
+		return chooseName(bean, annotation.name(), annotation.absolute(), klass, member);
 	}
 
-	static String forCachedGauge(Class<?> klass, Member member, CachedGauge annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member);
+	static String forCachedGauge(Object bean, Class<?> klass, Member member, CachedGauge annotation) {
+		return chooseName(bean, annotation.name(), annotation.absolute(), klass, member);
 	}
 
 	static String forExceptionMeteredMethod(Class<?> klass, Member member, ExceptionMetered annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member, ExceptionMetered.DEFAULT_NAME_SUFFIX);
+		return chooseName(null, annotation.name(), annotation.absolute(), klass, member, ExceptionMetered.DEFAULT_NAME_SUFFIX);
 	}
 
 	static String forCountedMethod(Class<?> klass, Member member, Counted annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member);
+		return chooseName(null, annotation.name(), annotation.absolute(), klass, member);
 	}
 
 	static String forMetricField(Class<?> klass, Member member, Metric annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member);
+		return chooseName(null, annotation.name(), annotation.absolute(), klass, member);
 	}
 
 	@Deprecated
 	static String forCachedGauge(Class<?> klass, Member member, com.ryantenney.metrics.annotation.CachedGauge annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member);
+		return chooseName(null, annotation.name(), annotation.absolute(), klass, member);
 	}
 
 	@Deprecated
 	static String forCountedMethod(Class<?> klass, Member member, com.ryantenney.metrics.annotation.Counted annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member);
+		return chooseName(null, annotation.name(), annotation.absolute(), klass, member);
 	}
 
 	@Deprecated
 	static String forMetricField(Class<?> klass, Member member, com.ryantenney.metrics.annotation.Metric annotation) {
-		return chooseName(annotation.name(), annotation.absolute(), klass, member);
+		return chooseName(null, annotation.name(), annotation.absolute(), klass, member);
 	}
 
-	static String chooseName(String explicitName, boolean absolute, Class<?> klass, Member member, String... suffixes) {
+	static String chooseName(Object bean, String explicitName, boolean absolute, Class<?> klass, Member member, String... suffixes) {
+		String prefix = "";
+		if (bean != null && bean instanceof CustomPrefixConfigurer) {
+			CustomPrefixConfigurer customPrefixConfigurer = (CustomPrefixConfigurer) bean;
+			prefix = customPrefixConfigurer.getCustomPrefix();
+		}
+
 		if (explicitName != null && !explicitName.isEmpty()) {
 			if (absolute) {
-				return explicitName;
+				return name(prefix, explicitName);
 			}
-			return name(klass.getCanonicalName(), explicitName);
+			return name(prefix, klass.getCanonicalName(), explicitName);
 		}
-		return name(name(klass.getCanonicalName(), member.getName()), suffixes);
+		return name(name(prefix, klass.getCanonicalName(), member.getName()), suffixes);
 	}
 
 }

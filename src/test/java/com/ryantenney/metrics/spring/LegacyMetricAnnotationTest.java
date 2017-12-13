@@ -57,31 +57,31 @@ public class LegacyMetricAnnotationTest {
 
 		assertNotNull(target.theNameForTheMeter);
 		assertNotNull(target2.theNameForTheMeter);
-		Meter meter = (Meter) forLegacyMetricField(metricRegistry, LegacyMetricAnnotationTest.Target.class, "theNameForTheMeter");
+		Meter meter = (Meter) forLegacyMetricField(target, metricRegistry, LegacyMetricAnnotationTest.Target.class, "theNameForTheMeter");
 		assertSame(target.theNameForTheMeter, meter);
 		assertSame(target2.theNameForTheMeter, meter);
 
 		assertNotNull(target.timer);
 		assertNotNull(target2.timer);
-		Timer timer = (Timer) forLegacyMetricField(metricRegistry, LegacyMetricAnnotationTest.Target.class, "timer");
+		Timer timer = (Timer) forLegacyMetricField(target, metricRegistry, LegacyMetricAnnotationTest.Target.class, "timer");
 		assertSame(target.timer, timer);
 		assertSame(target2.timer, timer);
 
 		assertNotNull(target.counter);
 		assertNotNull(target2.counter);
-		Counter ctr = (Counter) forLegacyMetricField(metricRegistry, LegacyMetricAnnotationTest.Target.class, "counter");
+		Counter ctr = (Counter) forLegacyMetricField(target, metricRegistry, LegacyMetricAnnotationTest.Target.class, "counter");
 		assertSame(target.counter, ctr);
 		assertSame(target2.counter, ctr);
 
 		assertNotNull(target.histogram);
 		assertNotNull(target2.histogram);
-		Histogram hist = (Histogram) forLegacyMetricField(metricRegistry, LegacyMetricAnnotationTest.Target.class, "histogram");
+		Histogram hist = (Histogram) forLegacyMetricField(target, metricRegistry, LegacyMetricAnnotationTest.Target.class, "histogram");
 		assertSame(target.histogram, hist);
 		assertSame(target2.histogram, hist);
 
 		assertNotNull(target.uniformHistogram);
 		assertNotNull(target2.uniformHistogram);
-		Histogram uniHist = (Histogram) forLegacyMetricField(metricRegistry, LegacyMetricAnnotationTest.Target.class, "uniformHistogram");
+		Histogram uniHist = (Histogram) forLegacyMetricField(target, metricRegistry, LegacyMetricAnnotationTest.Target.class, "uniformHistogram");
 		assertSame(target.uniformHistogram, uniHist);
 		assertSame(target2.uniformHistogram, uniHist);
 	}
